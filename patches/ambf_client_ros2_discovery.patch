@@ -1,0 +1,40 @@
+diff --git a/ros_modules/ambf_client/python/ambf_client/ambf_client.py b/ros_modules/ambf_client/python/ambf_client/ambf_client.py
+index 3c376c9e..45df58a3 100644
+--- a/ros_modules/ambf_client/python/ambf_client/ambf_client.py
++++ b/ros_modules/ambf_client/python/ambf_client/ambf_client.py
+@@ -46,6 +46,7 @@ import os
+ from ros_abstraction_layer import ral
+ 
+ import threading
++import time
+ 
+ from ambf_msgs.msg import ActuatorState, ActuatorCmd
+ from ambf_msgs.msg import CameraState, CameraCmd
+@@ -126,9 +127,25 @@ class Client:
+             pass
+         return obj_handle
+ 
+-    def create_objs_from_rostopics(self, publish_rate):
++    def create_objs_from_rostopics(self, publish_rate, discovery_timeout=10.0, retry_interval=0.2):
+         self.ral = ral(self._client_name)
+-        self._ros_topics = self.ral.get_published_topics()
++        deadline = time.time() + discovery_timeout
++        self._ros_topics = []
++
++        while time.time() < deadline:
++            topics = self.ral.get_published_topics()
++            ambf_state_topics = [topic for topic in topics if topic[0].startswith("/ambf/") and topic[0].endswith("/State")]
++            if ambf_state_topics:
++                self._ros_topics = topics
++                print(f"Discovered {len(ambf_state_topics)} AMBF state topics")
++                break
++            time.sleep(retry_interval)
++
++        if not self._ros_topics:
++            self._ros_topics = self.ral.get_published_topics()
++            print("No AMBF State topics discovered")
++
++        # self._ros_topics = self.ral.get_published_topics()
+         self.set_publish_rate(publish_rate)
+ 
+ 
