@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-E95420?logo=ubuntu&logoColor=white)
 
-This repository provides a ROS 2-based Xbox controller teleoperation interface for the Surgical Robotics Challenge running in AMBF 3.0. It enables Cartesian control of dual dVRK Patient Side Manipulators (PSMs) for surgical manipulation tasks such as peg transfer.
+This repository provides a ROS 2-based Xbox controller teleoperation interface for the Surgical Robotics Challenge running on AMBF 3.0. It enables Cartesian control of dual dVRK Patient Side Manipulators (PSMs) for surgical manipulation tasks such as peg transfer.
 
 ## Features
 - Cartesian teleoperation of dual dVRK Patient Side Manipulators (PSMs)
@@ -13,6 +13,14 @@ This repository provides a ROS 2-based Xbox controller teleoperation interface f
 - Independent jaw control and pose reset
 - Built on ROS 2 Humble and AMBF 3.0
 - Compatible with the Surgical Robotics Challenge environments
+
+## Demo
+<p align="center">
+  <img src="media/ambf_teleop_success.gif" width="800">
+</p>
+Successful dual-arm peg transfer using an Xbox controller.
+
+[Watch the full teleoperation video.](https://drive.google.com/file/d/1nw7K51ZFjbJIjIJoMCaw_GJpbm-48wjM/view?usp=sharing)
 
 ## Setup
 ### Requirements
@@ -22,19 +30,26 @@ This repository provides a ROS 2-based Xbox controller teleoperation interface f
 - [Surgical Robotics Challenge](https://github.com/surgical-robotics-ai/surgical_robotics_challenge)
 
 ### Installation
-Clone this repository and place `xbox_teleop.py` under `scripts/surgical_robotics_challenge/teleoperation/`.
+Clone this repository:
+```bash
+git clone https://github.com/LenaASu/ambf-teleop.git
+```
 
-## Demo
+Copy `xbox_teleop.py` into the following directory in the Surgical Robotics Challenge repository:
+```
+scripts/surgical_robotics_challenge/teleoperation/
+```
 
-<p align="center">
-  <img src="media/ambf_teleop_success.gif" width="800">
-</p>
-Successful dual-arm peg transfer using an Xbox controller.
+### Troubleshooting
 
-[Watch the full teleoperation video.](https://drive.google.com/file/d/1nw7K51ZFjbJIjIJoMCaw_GJpbm-48wjM/view?usp=sharing)
+If object discovery fails when launching the teleoperation node in ROS 2, apply the provided patch:
+
+```bash
+git apply patches/ambf_client_ros2_discovery.patch
+```
 
 ## Usage
-### Launch environments
+### Launch the environment
 
 1. Source the setup files in each new terminal:
 
@@ -49,7 +64,7 @@ source ~/ros_ambf_ws/install/setup.bash
 ./run_env_pegboard_asymmetric.sh
 ```
 
-3. Start CTRK interface without launching the ECM:
+3. Start CRTK interface without launching the ECM:
 
 ```bash
 python3 scripts/surgical_robotics_challenge/launch_crtk_interface.py --ecm False
@@ -93,6 +108,9 @@ Get to know Xbox controller's sticks and buttons: [Get to know your controller](
   <img src="media/ambf_teleop_communication.png" width="600">
 </p>
 
-The Xbox teleoperation node subscribes to the Cartesian pose feedback (measured_cp) and publishes Cartesian pose and jaw commands (servo_cp, servo_jp) through the CRTK interface.
+The `xbox_teleop` node subscribes to Cartesian pose feedback (`measured_cp`) and publishes Cartesian pose (`servo_cp`) and jaw (`servo_jp`) commands through the CRTK interface.
 
+## Future Work
+- Rotation controller mapping
+- Haptic device support
 
