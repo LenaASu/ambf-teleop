@@ -88,5 +88,11 @@ Get to know Xbox controller's sticks and buttons: [Get to know your controller](
 | RB                   | Toggle PSM2 jaw       |
 | B                    | Reset PSM2 pose       |
 
-## Simplified ROS 2 Communication Graph
+## Communication Network
+<p align="center">
+  <img src="media/ambf_teleop_communication.png" width="600">
+</p>
+
+The Xbox teleoperation node subscribes to the Cartesian pose feedback (measured_cp) and publishes Cartesian pose and jaw commands (servo_cp, servo_jp) through the CRTK interface.
+
 
