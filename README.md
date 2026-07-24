@@ -10,7 +10,7 @@ Xbox controller teleoperation framework for the [Surgical Robotics Challenge](ht
 ## Demo
 
 <p align="center">
-  <img src="media/ambf_teleop_success_small.gif" width="900">
+  <img src="media/ambf_teleop_success.gif" width="800">
 </p>
 
 [Watch the full teleoperation demo](https://drive.google.com/file/d/1nw7K51ZFjbJIjIJoMCaw_GJpbm-48wjM/view?usp=sharing)
