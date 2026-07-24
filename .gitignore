@@ -219,3 +219,7 @@ __marimo__/
 
 __pycache__/
 *.pyc
+
+# Large Media files
+media/*.mp4
+media/*.gif
