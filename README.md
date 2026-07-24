@@ -24,7 +24,7 @@ This repository provides a ROS 2-based Xbox controller teleoperation interface f
 ### Installation
 Clone this repository and place `xbox_teleop.py` under `scripts/surgical_robotics_challenge/teleoperation/`.
 
-## Demo Video
+## Demo
 
 <p align="center">
   <img src="media/ambf_teleop_success.gif" width="800">
